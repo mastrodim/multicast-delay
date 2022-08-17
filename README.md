@@ -47,10 +47,51 @@ The role of each node in the topology is explained as follows:
 
 This section describes how to prepare your nodes to run this experiment:
 
+##Configure routing on source:
 On source 1 run:
 
-`sudo route add -net 10.10.0.0/16 gw 10.10.101.1 
-sudo route add -net 224.0.0.0 netmask 240.0.0.0 dev eth1`
+`sudo route add -net 10.10.0.0/16 gw 10.10.101.1`
+`sudo route add -net 224.0.0.0 netmask 240.0.0.0 dev eth1`
+
+##Configure unicast routing 
+
+In all of the routers, open the router configuration terminal with:
+
+`VTYSH_PAGER=more`
+`sudo vtysh`
+
+At the FRR shell, run
+
+`show ip route`
+
+To configure OSPF, enter Global Configuration mode in each router:
+
+`configure terminal`  
+
+Then, type
+
+`router ospf`  
+
+to enable OSPF
+
+
+Finally, you need to associate one or more networks to the OSPF routing process. Run
+
+`network 10.10.0.0/16 area 0.0.0.0`  
+
+so that all addresses from 10.10.0.0-10.10.255.255 will be enabled for OSPF.
+
+##Configure multicast routing
+
+Once the unicast routing protocol is set up, we can configure multicast routing.
+First, we will prepare the rendezvous point. At the FRR shell on the rp router, run:
+
+`configure terminal`  
+`int eth1`  
+`ip pim sm`  
+`ip pim rp 10.10.1.100 224.0.0.0/4`  
+`ip pim spt-switchover infinity`  
+`exit`  
 
 ## Notes
 
