@@ -11,6 +11,9 @@ Redundancy - sending multiple copies of data across different network paths - ha
 
 ## Result
 
+The following CFD plot shows how redundancy mitigates the poor reliability and reduces the delay. The graph shows that introducing more links and thus redundancy results in huge drops in the delay. The more links that are introduced, the majority of the data packets experience less delay.
+
+![PICTURE2](https://user-images.githubusercontent.com/57250247/185035728-40b739e1-0254-4787-8319-691ff1212c24.jpg)
 
 
 
