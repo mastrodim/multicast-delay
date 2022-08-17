@@ -37,8 +37,8 @@ This should be the topology in front of you:
 
 The role of each node in the topology is explained as follows:
 
-rp will be the rendezvous point, the root of the shared tree in PIM-SM "Any-Source Multicast" mode.
-    the routers cr1 and cr2 represent core routers.
+*rp will be the rendezvous point, the root of the shared tree in PIM-SM "Any-Source Multicast" mode.
+*the routers cr1 and cr2 represent core routers.
     the routers fhr1 and fhr2 are directly connected to the multicast sources source1 and source2, respectively. Routers that are directly connected to a multicast source are known as first hop routers.
     the routers lhr1 and lhr2 are directly connected to the hosts that will be multicast receivers: romeo, juliet, hamlet, and ophelia. Routers that are directly connected to a multicast receiver are known as last hop routers.
 
