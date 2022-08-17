@@ -47,7 +47,10 @@ The role of each node in the topology is explained as follows:
 
 This section describes how to prepare your nodes to run this experiment:
 
+On source 1 run:
 
+**_NOTE:_**  sudo route add -net 10.10.0.0/16 gw 10.10.101.1  
+sudo route add -net 224.0.0.0 netmask 240.0.0.0 dev eth1
 
 ## Notes
 
