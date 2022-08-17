@@ -30,11 +30,23 @@ https://www.cloudlab.us/instantiate.php?profile=c21c760e-09d7-11ed-b318-e4434b23
 
 Click on "Instantiate", then choose CloudLab Wisconsin and start your experiment. Wait until all nodes have booted and are ready to log in, then click on the "List view" tab to get SSH login instructions for your nodes. Then, use SSH to open a shell session on each node in the experiment. 
 
+This should be the topology in front of you:
+
+
+![MastrogiannisDimitrios_poster_2022](https://user-images.githubusercontent.com/57250247/185206033-2ad85c6c-3759-450d-9ad1-a44686d6c992.jpg)
+
+The role of each node in the topology is explained as follows:
+
+rp will be the rendezvous point, the root of the shared tree in PIM-SM "Any-Source Multicast" mode.
+    the routers cr1 and cr2 represent core routers.
+    the routers fhr1 and fhr2 are directly connected to the multicast sources source1 and source2, respectively. Routers that are directly connected to a multicast source are known as first hop routers.
+    the routers lhr1 and lhr2 are directly connected to the hosts that will be multicast receivers: romeo, juliet, hamlet, and ophelia. Routers that are directly connected to a multicast receiver are known as last hop routers.
 
 
 ## Set Up Resources 
 
 This section describes how to prepare your nodes to run this experiment:
+
 
 
 ## Notes
