@@ -20,6 +20,21 @@ The following CFD plot shows how redundancy mitigates the poor reliability and r
 
 ## Run my experiment
 
+To produce the results above, we ran a sequence of experiments on CloudLab to explore how multicasting can mitigate the delay created due to the poor reliability of mmWave links. In this profile, we provide instructions for running these experiments, in order to reproduce our results.
+
+## Reserve Resources
+
+To run these experiments, you will need an account on CloudLab. If you already have a GENI account, you can use it to log in to CloudLab. Once you are logged in to CloudLab, open our multicast-full-v1 profile: 
+
+https://www.cloudlab.us/instantiate.php?profile=c21c760e-09d7-11ed-b318-e4434b2381fc&from=manage-profile
+
+Click on "Instantiate", then choose CloudLab Wisconsin and start your experiment. Wait until all nodes have booted and are ready to log in, then click on the "List view" tab to get SSH login instructions for your nodes. Then, use SSH to open a shell session on each node in the experiment. 
+
+
+## Set Up Resources 
+
+This section describes how to prepare your nodes to run this experiment:
+
 
 ## Notes
 
