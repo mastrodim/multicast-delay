@@ -93,6 +93,70 @@ First, we will prepare the rendezvous point. At the FRR shell on the rp router, 
 `ip pim spt-switchover infinity`  
 `exit`  
 
+Next, we will configure the two core routers, cr1 and cr2. On these routers, we will turn on PIM-SM and set the RP address for all multicast groups to 10.10.1.100, as with the RP. However, this router has several network interfaces, so we will need to repeat these steps for each interface.
+
+At the FRR shell on cr1 and cr2, run:
+
+`configure terminal`
+
+`int eth1`  
+`ip pim sm`
+`ip pim rp 10.10.1.100 224.0.0.0/4`
+
+
+`int eth2`  
+`ip pim sm`  
+`ip pim rp 10.10.1.100 224.0.0.0/4`
+
+
+`int eth3`  
+`ip pim sm`  
+`ip pim rp 10.10.1.100 224.0.0.0/4`
+
+`ip pim spt-switchover infinity`
+
+`exit`  
+
+Then, we will configure the router connected to the multicast source: fhr1. At the FRR shell on fhr1, run:
+
+`configure terminal`
+
+`int eth1`  
+`ip pim sm`  
+`ip pim rp 10.10.1.100 224.0.0.0/4`
+
+
+`int eth2`  
+`ip pim sm`  
+`ip pim rp 10.10.1.100 224.0.0.0/4`
+
+`ip pim spt-switchover infinity`
+
+`exit`  
+
+Finally, we will configure the routers connected to the multicast receivers.: lhr1, lhr2, lhr3, lhr4 On these routers, we will also need to enable IGMP, since these routers will use the IGMP Join messages from receivers to build the multicast tree. At the FRR shell on these routers, run:
+
+`configure terminal`
+
+`int eth1`  
+`ip igmp`  
+`ip pim sm`  
+`ip pim rp 10.10.1.100 224.0.0.0/4`
+
+
+`int eth2`  
+`ip igmp`  
+`ip pim sm`  
+`ip pim rp 10.10.1.100 224.0.0.0/4`
+
+`ip pim spt-switchover infinity`
+
+`exit` 
+
+##Apply Random Blockages
+
+At this point, we will implement random blockages on certain links that reflect the behavior of mmWave links.
+
 ## Notes
 
 
