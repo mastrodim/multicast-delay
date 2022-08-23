@@ -157,6 +157,8 @@ Finally, we will configure the routers connected to the multicast receivers.: lh
 
 At this point, we will implement random blockages on certain links that reflect the behavior of mmWave links.
 
+
+
 ## Notes
 
 
