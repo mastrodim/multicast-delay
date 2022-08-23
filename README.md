@@ -53,7 +53,7 @@ On source 1 run:
 `sudo route add -net 10.10.0.0/16 gw 10.10.101.1`
 `sudo route add -net 224.0.0.0 netmask 240.0.0.0 dev eth1`
 
-##Configure unicast routing 
+## Configure unicast routing 
 
 In all of the routers, open the router configuration terminal with:
 
@@ -153,7 +153,7 @@ Finally, we will configure the routers connected to the multicast receivers.: lh
 
 `exit` 
 
-##Apply Random Blockages
+## Apply Random Blockages
 
 At this point, we will implement random blockages on certain links that reflect the behavior of mmWave links.
 
