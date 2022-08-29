@@ -154,11 +154,29 @@ Finally, we will configure the routers connected to the multicast receivers.: lh
 `exit` 
 
 
-## 
+## Router Configuration
+
+At this point, we will configure the interface on the routers through which the traffic goes to the destination node. We will use tc to set up an HTB queue with an egress rate of 1Gbps. We will add a FIFO queue with a limit of 100MB. The maximum size of 4K quality video packets is 20MB per second. Thus, we added a big enough limit in order not to have packet drops.
+
+For each router, find the address of the interface through which traffic flows to the destination and run the following commands:
+
+`sudo tc qdisc del dev $(ip route get 10.10.105.2 | grep -oP "(?<=dev )[^ ]+") root`  
+
+`sudo tc qdisc replace dev $(ip route get 10.10.105.2 | grep -oP "(?<=dev )[^ ]+") root handle 1: htb default 3`  
+
+`sudo tc class add dev $(ip route get 10.10.105.2 | grep -oP "(?<=dev )[^ ]+") parent 1: classid 1:3 htb rate 1gbit`
+
+`sudo tc qdisc add dev $(ip route get 10.10.105.2 | grep -oP "(?<=dev )[^ ]+") parent 1:3 handle 3: bfifo limit 100000000`
+
+In the example above, the interface had an address of 10.10.105.2.
+
+The address of each interface can be found in the cloudlab network topology view by clicking on the respective network element.
+
+
 
 ## Apply Random Blockages
 
-At this point, we will implement random blockages on certain links that reflect the behavior of mmWave links.
+At this point, we will implement random blockages on certain links that reflect the behavior of mmWave links. It is
 
 
 
