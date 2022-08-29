@@ -81,7 +81,7 @@ Finally, you need to associate one or more networks to the OSPF routing process.
 
 so that all addresses from 10.10.0.0-10.10.255.255 will be enabled for OSPF.
 
-##Configure multicast routing
+## Configure multicast routing
 
 Once the unicast routing protocol is set up, we can configure multicast routing.
 First, we will prepare the rendezvous point. At the FRR shell on the rp router, run:
@@ -152,6 +152,9 @@ Finally, we will configure the routers connected to the multicast receivers.: lh
 `ip pim spt-switchover infinity`
 
 `exit` 
+
+
+## 
 
 ## Apply Random Blockages
 
