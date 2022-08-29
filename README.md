@@ -47,7 +47,7 @@ The role of each node in the topology is explained as follows:
 
 This section describes how to prepare your nodes to run this experiment:
 
-##Configure routing on source:
+### Configure routing on source:
 On source 1 run:
 
 `sudo route add -net 10.10.0.0/16 gw 10.10.101.1`
