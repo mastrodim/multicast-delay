@@ -47,7 +47,7 @@ The role of each node in the topology is explained as follows:
 
 This section describes how to prepare your nodes to run this experiment:
 
-### Configure routing on source:
+##Configure routing on source:
 On source 1 run:
 
 `sudo route add -net 10.10.0.0/16 gw 10.10.101.1`
@@ -176,7 +176,15 @@ The address of each interface can be found in the cloudlab network topology view
 
 ## Apply Random Blockages
 
-At this point, we will implement random blockages on certain links that reflect the behavior of mmWave links. It is
+At this point, we will implement random blockages on certain links that reflect the behavior of mmWave links. Those blockages will be implemented in order to mimic the behavior of mmWave links which are prone to experience blockages. In our experiment, we will suppose that only the links after the routers cr1 cr2 are mmWave links and that the ones before them are fiber links that experience negligible blockages.
+
+So, we will implement the blockages in all the interfaces of routers cr1, cr2, lhr1, lhr2, lhr3, lhr4.
+
+We will create a filename.sh gist in GitHub with the following code:
+
+
+![Blockage_adobe_express](https://user-images.githubusercontent.com/57250247/187240601-11a30a74-c695-4ae0-9689-ead560a2b53a.svg)
+
 
 
 
