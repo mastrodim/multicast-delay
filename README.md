@@ -200,15 +200,76 @@ where "blockage" is the name of the respective gist file.
 
 At this stage, we will enable the 4 different interfaces of the receiver(rx) in order to receive traffic through them and thus achieve redundancy.
 
-sudo ip addr add 239.255.12.42 dev eth1 autojoin
-sudo ip addr add 239.255.12.42 dev eth2 autojoin
-sudo ip addr add 239.255.12.42 dev eth3 autojoin
-sudo ip addr add 239.255.12.42 dev eth4 autojoin
+`sudo ip addr add 239.255.12.42 dev eth1 autojoin`
+`sudo ip addr add 239.255.12.42 dev eth2 autojoin` 
+`sudo ip addr add 239.255.12.42 dev eth3 autojoin`
+`sudo ip addr add 239.255.12.42 dev eth4 autojoin`
+
+## Synchronizing the network elements.
+
+As the experiment revolves around calculating delay, it is important to have all the network elements use the same time.
+In order to sync them, we will employ NTP.
+We will run the following commands in the rx window and source1 window.
+
+`sudo service ntp stop`
+`sudo ntpd -gq -d 1 0.us.pool.ntp.org 1.us.pool.ntp.org`
+`sudo service ntp start`
+
+## Capturing and saving the data packets.
+
+Now, we will move on to capture the data packets that are send from the sender (source1) to the receiver through its 4 interfaces.
+
+In a sender(source 1) window, type:
+
+`sudo tcpdump -i eth1 -s 96 -w rec-send-ntp-tcpdump-snaplen.pcap`
+
+Create four receiver(rx) windows for each of the four interfaces.
+
+In the "eth1" receiver window run:
+
+`sudo tcpdump -i eth1 -s 96 -w rec-eth1-ntp-tcpdump-snaplen.pcap`
+
+In the "eth2" receiver window run:
+
+`sudo tcpdump -i eth2 -s 96 -w rec-eth2-ntp-tcpdump-snaplen.pcap`
+
+In the "eth3" receiver window run:
+
+`sudo tcpdump -i eth3 -s 96 -w rec-eth3-ntp-tcpdump-snaplen.pcap`
+
+In the "eth4" receiver window run:
+
+`sudo tcpdump -i eth4 -s 96 -w rec-eth4-ntp-tcpdump-snaplen.pcap`
+
+## Enabling the Video Stream.
+
+In a sender(source1) window, we will run the following command to start a video stream:
+
+`vlc --intf ncurses -aout dummy hdvideo.mp4 --sout udp:239.255.12.42 --ttl 6 --repeat`
+
+In a receiver(rx) window run:
+
+`vlc --intf ncurses --vout dummy --aout dummy udp://@239.255.12.42 --repeat`
+
+
+The above enables the video stream traffic to reach the receiver as the receiver joins the multicast tree.
+
+
+## Stopping the experiment
+
+After 3.5 minutes have elapsed, stop the video stream at the sender(source1) and receiver(rx) window by typing Ctrl+C in each window.
+We choose to stop the video stream after 3.5 minutes in order to avoid a loop in the video stream playback that could mix the data collected.
+Then, in each of the windows where data is captured also stop the capturing by typing Ctrl+C.
 
 
 
 
 
+
+##
+
+
+We will use 
 
 
 
@@ -216,6 +277,8 @@ sudo ip addr add 239.255.12.42 dev eth4 autojoin
 
 ## Notes
 
+ntp
+multicasting
 
 
 ### References
