@@ -43,17 +43,13 @@ The role of each node in the topology is explained as follows:
 * the routers lhr1, lhr2, lhr3, lhr4 are directly connected to the interfaces of the host that will be the multicast receiver: rx .Routers that are directly connected to a multicast receiver are known as last hop routers.
 
 
-## Set Up Resources 
+## Configure Routing 
 
-This section describes how to prepare your nodes to run this experiment:
-
-##Configure routing on source:
+Configure routing on source:
 On source 1 run:
 
 `sudo route add -net 10.10.0.0/16 gw 10.10.101.1`
 `sudo route add -net 224.0.0.0 netmask 240.0.0.0 dev eth1`
-
-## Configure Routing 
 
 ### Configure unicast routing 
 
