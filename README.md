@@ -200,6 +200,14 @@ where "blockage" is the name of the respective gist file.
 
 At this stage, we will enable the 4 different interfaces of the receiver(rx) in order to receive traffic through them and thus achieve redundancy.
 
+sudo ip addr add 239.255.12.42 dev eth1 autojoin
+sudo ip addr add 239.255.12.42 dev eth2 autojoin
+sudo ip addr add 239.255.12.42 dev eth3 autojoin
+sudo ip addr add 239.255.12.42 dev eth4 autojoin
+
+
+
+
 
 
 
