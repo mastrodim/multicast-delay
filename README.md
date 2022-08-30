@@ -16,8 +16,6 @@ The following CFD plot shows how redundancy mitigates the poor reliability and r
 ![PICTURE2](https://user-images.githubusercontent.com/57250247/185035728-40b739e1-0254-4787-8319-691ff1212c24.jpg)
 
 
-
-
 ## Run my experiment
 
 To produce the results above, we ran a sequence of experiments on CloudLab to explore how multicasting can mitigate the delay created due to the poor reliability of mmWave links. In this profile, we provide instructions for running these experiments, in order to reproduce our results.
@@ -43,7 +41,7 @@ The role of each node in the topology is explained as follows:
 * the routers lhr1, lhr2, lhr3, lhr4 are directly connected to the interfaces of the host that will be the multicast receiver: rx .Routers that are directly connected to a multicast receiver are known as last hop routers.
 
 
-## Configure Routing 
+### Configure Routing 
 
 Configure routing on source:
 On source 1 run:
@@ -51,7 +49,7 @@ On source 1 run:
 `sudo route add -net 10.10.0.0/16 gw 10.10.101.1`
 `sudo route add -net 224.0.0.0 netmask 240.0.0.0 dev eth1`
 
-### Configure unicast routing 
+#### Configure unicast routing 
 
 In all of the routers, open the router configuration terminal with:
 
@@ -79,7 +77,7 @@ Finally, you need to associate one or more networks to the OSPF routing process.
 
 so that all addresses from 10.10.0.0-10.10.255.255 will be enabled for OSPF.
 
-### Configure multicast routing
+#### Configure multicast routing
 
 Once the unicast routing protocol is set up, we can configure multicast routing.
 First, we will prepare the rendezvous point. At the FRR shell on the rp router, run:
@@ -152,7 +150,7 @@ Finally, we will configure the routers connected to the multicast receivers.: lh
 `exit` 
 
 
-### Router Configuration
+#### Router Configuration
 
 At this point, we will configure the interface on the routers through which the traffic goes to the destination node. We will use tc to set up an HTB queue with an egress rate of 1Gbps. We will add a FIFO queue with a limit of 100MB. The maximum size of 4K quality video packets is 20MB per second. Thus, we added a big enough limit in order not to have packet drops.
 
@@ -172,7 +170,7 @@ The address of each interface can be found in the cloudlab network topology view
 
 
 
-## Applying Random Blockages
+### Applying Random Blockages
 
 At this point, we will implement random blockages on certain links that reflect the behavior of mmWave links. Those blockages will be implemented in order to mimic the behavior of mmWave links which are prone to experience blockages. In our experiment, we will suppose that only the links after the routers cr1 cr2 are mmWave links and that the ones before them are fiber links that experience negligible blockages.
 
@@ -194,7 +192,7 @@ Then, in order to run the code, open a router window for each interface and type
 
 where "blockage" is the name of the respective gist file.
 
-## Enabling the interfaces of the receiver
+### Enabling the interfaces of the receiver
 
 At this stage, we will enable the 4 different interfaces of the receiver(rx) in order to receive traffic through them and thus achieve redundancy.
 
@@ -203,7 +201,7 @@ At this stage, we will enable the 4 different interfaces of the receiver(rx) in 
 `sudo ip addr add 239.255.12.42 dev eth3 autojoin`
 `sudo ip addr add 239.255.12.42 dev eth4 autojoin`
 
-## Synchronizing the network elements
+### Synchronizing the network elements
 
 As the experiment revolves around calculating delay, it is important to have all the network elements use the same time.
 In order to sync them, we will employ NTP.
@@ -213,7 +211,7 @@ We will run the following commands in the rx window and source1 window.
 `sudo ntpd -gq -d 1 0.us.pool.ntp.org 1.us.pool.ntp.org`
 `sudo service ntp start`
 
-## Capturing and saving the data packets
+### Capturing and saving the data packets
 
 Now, we will move on to capture the data packets that are send from the sender (source1) to the receiver through its 4 interfaces.
 
@@ -239,7 +237,7 @@ In the "eth4" receiver window run:
 
 `sudo tcpdump -i eth4 -s 96 -w rec-eth4-ntp-tcpdump-snaplen.pcap`
 
-## Enabling the Video Stream
+### Enabling the Video Stream
 
 In a sender (source1) window, we will run the following command to start a video stream:
 
@@ -253,14 +251,14 @@ In a receiver (rx) window run:
 The above enables the video stream traffic to reach the receiver as the receiver joins the multicast tree.
 
 
-## Stopping the experiment
+### Stopping the experiment
 
 After 3.5 minutes have elapsed, stop the video stream at the sender(source1) and receiver(rx) window by typing Ctrl+C in each window.
 We choose to stop the video stream after 3.5 minutes in order to avoid a loop in the video stream playback that could mix the data collected.
 Then, in each of the windows where data is captured also stop the capturing by typing Ctrl+C.
 
 
-## Converting the .pcap file to a .csv file
+### Converting the .pcap file to a .csv file
 
 We will open a new sender (source1) window and type the following code:
 
@@ -276,21 +274,26 @@ We will open a new receiver (rx) window and type the following code:
 
 `tshark -r rec-eth4-ntp-tcpdump-snaplen.pcap  -n  -Y  "udp.port==1234" -T fields -e frame.time_epoch -e ip.id  -e frame.len -e ip.src -e ip.dst -e eth.addr -E separator=, >rec-eth4-ntp-tcpdump-snaplen.csv`
 
+### Data Analysis
+
+The data analysis is conducted in a Python Notebook, that can be found in the following link:
+
+https://colab.research.google.com/drive/1rYC-nQqZDDdQ_XEzRBsgyTOvidaYZisX?usp=sharing
 
 
+There, the .csv files can be uploaded and by running the notebook commands, the data will be analyzed and the results will be presented in a graphic format.
 
 
+## References
 
+1. A. Koutsaftis, M. Ozkoc, F. Fund, P. Liu and S. S. Panwar, "Fast Wireless Backhaul: A Multi-Connectivity Enabled mmWave Cellular System," to appear in  2022 IEEE Global Communications Conference: Communication QoS, Reliability and Modeling, 2022.
 
+2. A. Srivastava, F. Fund and S. S. Panwar, "An Experimental Evaluation of Low Latency Congestion Control for mmWave Links," IEEE INFOCOM 2020 - IEEE Conference on Computer Communications Workshops (INFOCOM WKSHPS), 2020, pp. 352-357, doi: 10.1109/INFOCOMWKSHPS50562.2020.9162881.
 
+3. F. Fund, “NTP exercises,” Internet Architecture and Protocols. [Online]. Available: https://ffund.github.io/tcp-ip-essentials/lab8/el5373-lab8-89. [Accessed: 30-Aug-2022]. 
 
+4. F. Fund, “Multicast routing with PIM,” Run my testbed experiment, 25-Apr-2022. [Online]. Available: https://witestlab.poly.edu/blog/multicast-routing-with-pim/. [Accessed: 30-Aug-2022]. 
 
+5. A. Srivastava, “An experimental evaluation of low latency congestion control over mmwave links,” Run my testbed experiment, 31-Mar-2020. [Online]. Available: https://witestlab.poly.edu/blog/tcp-mmwave/. [Accessed: 30-Aug-2022]. 
 
-
-## Notes
-
-ntp
-multicasting
-
-
-### References
+6. F. Fund, “1.5 using tcpdump and Wireshark,” Internet Architecture and Protocols. [Online]. Available: https://ffund.github.io/tcp-ip-essentials/lab1/1-5-tcpdump-wireshark.html. [Accessed: 30-Aug-2022]. 
