@@ -182,8 +182,26 @@ So, we will implement the blockages in all the interfaces of routers cr1, cr2, l
 
 We will create a filename.sh gist in GitHub with the following code:
 
+![Blockage](https://user-images.githubusercontent.com/57250247/187446617-61651084-245b-49eb-84a3-26daa192f83b.png)
 
-![Blockage_adobe_express](https://user-images.githubusercontent.com/57250247/187240601-11a30a74-c695-4ae0-9689-ead560a2b53a.svg)
+At this point we should download each file to the respective receiver. So, we will open a router window for each interface and type:
+
+`wget link`
+
+where "link" is the URL link to the respective file.
+
+Then, in order to run the code, open a router window for each interface and type:
+
+`bash blockage.sh`
+
+where "blockage" is the name of the respective gist file.
+
+## Enabling the interfaces of the receiver
+
+At this stage, we will enable the 4 different interfaces of the receiver(rx) in order to receive traffic through them and thus achieve redundancy.
+
+
+
 
 
 
