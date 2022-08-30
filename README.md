@@ -283,6 +283,9 @@ https://colab.research.google.com/drive/1rYC-nQqZDDdQ_XEzRBsgyTOvidaYZisX?usp=sh
 
 There, the .csv files can be uploaded and by running the notebook commands, the data will be analyzed and the results will be presented in a graphic format.
 
+## Notes
+
+A video explaining the research project can be found in the following link: https://www.youtube.com/watch?v=VuEi0e0Ybbk
 
 ## References
 
