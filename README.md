@@ -20,6 +20,9 @@ The following CFD plot shows how redundancy mitigates the poor reliability and r
 
 ![Untitled drawing](https://user-images.githubusercontent.com/57250247/187475907-716f5493-eee1-4606-8915-1206209c1c7e.svg)
 
+![Untitled drawing](https://user-images.githubusercontent.com/57250247/187477219-a9a4cd65-38fe-461c-ba48-9556b3a51f51.svg)
+
+
 ## Run my experiment
 
 To produce the results above, we ran a sequence of experiments on CloudLab to explore how multicasting can mitigate the delay created due to the poor reliability of mmWave links. In this profile, we provide instructions for running these experiments, in order to reproduce our results.
