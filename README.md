@@ -53,7 +53,9 @@ On source 1 run:
 `sudo route add -net 10.10.0.0/16 gw 10.10.101.1`
 `sudo route add -net 224.0.0.0 netmask 240.0.0.0 dev eth1`
 
-## Configure unicast routing 
+## Configure Routing 
+
+### Configure unicast routing 
 
 In all of the routers, open the router configuration terminal with:
 
@@ -81,7 +83,7 @@ Finally, you need to associate one or more networks to the OSPF routing process.
 
 so that all addresses from 10.10.0.0-10.10.255.255 will be enabled for OSPF.
 
-## Configure multicast routing
+### Configure multicast routing
 
 Once the unicast routing protocol is set up, we can configure multicast routing.
 First, we will prepare the rendezvous point. At the FRR shell on the rp router, run:
@@ -154,7 +156,7 @@ Finally, we will configure the routers connected to the multicast receivers.: lh
 `exit` 
 
 
-## Router Configuration
+### Router Configuration
 
 At this point, we will configure the interface on the routers through which the traffic goes to the destination node. We will use tc to set up an HTB queue with an egress rate of 1Gbps. We will add a FIFO queue with a limit of 100MB. The maximum size of 4K quality video packets is 20MB per second. Thus, we added a big enough limit in order not to have packet drops.
 
@@ -174,7 +176,7 @@ The address of each interface can be found in the cloudlab network topology view
 
 
 
-## Apply Random Blockages
+## Applying Random Blockages
 
 At this point, we will implement random blockages on certain links that reflect the behavior of mmWave links. Those blockages will be implemented in order to mimic the behavior of mmWave links which are prone to experience blockages. In our experiment, we will suppose that only the links after the routers cr1 cr2 are mmWave links and that the ones before them are fiber links that experience negligible blockages.
 
@@ -205,7 +207,7 @@ At this stage, we will enable the 4 different interfaces of the receiver(rx) in 
 `sudo ip addr add 239.255.12.42 dev eth3 autojoin`
 `sudo ip addr add 239.255.12.42 dev eth4 autojoin`
 
-## Synchronizing the network elements.
+## Synchronizing the network elements
 
 As the experiment revolves around calculating delay, it is important to have all the network elements use the same time.
 In order to sync them, we will employ NTP.
@@ -215,7 +217,7 @@ We will run the following commands in the rx window and source1 window.
 `sudo ntpd -gq -d 1 0.us.pool.ntp.org 1.us.pool.ntp.org`
 `sudo service ntp start`
 
-## Capturing and saving the data packets.
+## Capturing and saving the data packets
 
 Now, we will move on to capture the data packets that are send from the sender (source1) to the receiver through its 4 interfaces.
 
@@ -241,7 +243,7 @@ In the "eth4" receiver window run:
 
 `sudo tcpdump -i eth4 -s 96 -w rec-eth4-ntp-tcpdump-snaplen.pcap`
 
-## Enabling the Video Stream.
+## Enabling the Video Stream
 
 In a sender (source1) window, we will run the following command to start a video stream:
 
@@ -255,14 +257,14 @@ In a receiver (rx) window run:
 The above enables the video stream traffic to reach the receiver as the receiver joins the multicast tree.
 
 
-## Stopping the experiment.
+## Stopping the experiment
 
 After 3.5 minutes have elapsed, stop the video stream at the sender(source1) and receiver(rx) window by typing Ctrl+C in each window.
 We choose to stop the video stream after 3.5 minutes in order to avoid a loop in the video stream playback that could mix the data collected.
 Then, in each of the windows where data is captured also stop the capturing by typing Ctrl+C.
 
 
-## Converting the .pcap file to a .csv file.
+## Converting the .pcap file to a .csv file
 
 We will open a new sender (source1) window and type the following code:
 
