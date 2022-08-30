@@ -243,11 +243,11 @@ In the "eth4" receiver window run:
 
 ## Enabling the Video Stream.
 
-In a sender(source1) window, we will run the following command to start a video stream:
+In a sender (source1) window, we will run the following command to start a video stream:
 
 `vlc --intf ncurses -aout dummy hdvideo.mp4 --sout udp:239.255.12.42 --ttl 6 --repeat`
 
-In a receiver(rx) window run:
+In a receiver (rx) window run:
 
 `vlc --intf ncurses --vout dummy --aout dummy udp://@239.255.12.42 --repeat`
 
@@ -255,21 +255,35 @@ In a receiver(rx) window run:
 The above enables the video stream traffic to reach the receiver as the receiver joins the multicast tree.
 
 
-## Stopping the experiment
+## Stopping the experiment.
 
 After 3.5 minutes have elapsed, stop the video stream at the sender(source1) and receiver(rx) window by typing Ctrl+C in each window.
 We choose to stop the video stream after 3.5 minutes in order to avoid a loop in the video stream playback that could mix the data collected.
 Then, in each of the windows where data is captured also stop the capturing by typing Ctrl+C.
 
 
+## Converting the .pcap file to a .csv file.
+
+We will open a new sender (source1) window and type the following code:
+
+`tshark -r rec-send-ntp-tcpdump-snaplen.pcap  -n  -Y  "udp.port==1234" -T fields -e frame.time_epoch -e ip.id  -e frame.len -e ip.src -e ip.dst -e eth.addr -E separator=, >rec-send-ntp-tcpdump-snaplen.csv`
+
+We will open a new receiver (rx) window and type the following code:
+
+`tshark -r rec-eth1-ntp-tcpdump-snaplen.pcap  -n  -Y  "udp.port==1234" -T fields -e frame.time_epoch -e ip.id  -e frame.len -e ip.src -e ip.dst -e eth.addr -E separator=, >rec-eth1-ntp-tcpdump-snaplen.csv`
+
+`tshark -r rec-eth2-ntp-tcpdump-snaplen.pcap  -n  -Y  "udp.port==1234" -T fields -e frame.time_epoch -e ip.id  -e frame.len -e ip.src -e ip.dst -e eth.addr -E separator=, >rec-eth2-ntp-tcpdump-snaplen.csv`
+
+`tshark -r rec-eth3-ntp-tcpdump-snaplen.pcap  -n  -Y  "udp.port==1234" -T fields -e frame.time_epoch -e ip.id  -e frame.len -e ip.src -e ip.dst -e eth.addr -E separator=, >rec-eth3-ntp-tcpdump-snaplen.csv`
+
+`tshark -r rec-eth4-ntp-tcpdump-snaplen.pcap  -n  -Y  "udp.port==1234" -T fields -e frame.time_epoch -e ip.id  -e frame.len -e ip.src -e ip.dst -e eth.addr -E separator=, >rec-eth4-ntp-tcpdump-snaplen.csv`
 
 
 
 
-##
 
 
-We will use 
+
 
 
 
